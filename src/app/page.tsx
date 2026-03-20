@@ -46,18 +46,7 @@ export default function Page() {
             />
           </div>
           <BlurFade delay={BLUR_FADE_DELAY} className="order-1 md:order-2 flex-shrink-0">
-            <div className="relative size-24 md:size-32">
-              {/* Blurred slow glow ring */}
-              <div
-                className="absolute inset-0 rounded-full animate-spin"
-                style={{
-                  background: "conic-gradient(from 0deg, #6366f1, #a855f7, #ec4899, #6366f1)",
-                  animationDuration: "6s",
-                  padding: "3px",
-                  filter: "blur(4px)",
-                  transform: "scale(1.08)",
-                }}
-              />
+            <div className="relative size-35 md:size-42">
               {/* Photo */}
               <div className="absolute inset-[3px] rounded-full overflow-hidden">
                 <img

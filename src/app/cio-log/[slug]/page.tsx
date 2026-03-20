@@ -5,6 +5,7 @@ import { TrendingUp, TrendingDown, Minus, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { MDXContent } from "@content-collections/mdx/react";
 import { mdxComponents } from "@/mdx-components";
+
 interface Props {
   params: Promise<{ slug: string }>;
 }
@@ -79,7 +80,6 @@ export default async function CIOLogSlugPage({ params }: Props) {
   const alpha = (portfolioVal - spyVal).toFixed(1);
   const alphaPositive = parseFloat(alpha) >= 0;
 
-  const MDX = log.mdx;
 
   return (
     <article className="flex flex-col gap-8">
