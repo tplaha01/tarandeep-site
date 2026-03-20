@@ -159,5 +159,12 @@ export const DATA = {
     },
   ],
 
-  hackathons: [],
+  hackathons: [] as {
+    title: string;
+    dates: string;
+    location: string;
+    description: string;
+    image?: string;
+    links?: { title: string; icon: React.ReactNode; href: string }[];
+  }[],
 } as const;
