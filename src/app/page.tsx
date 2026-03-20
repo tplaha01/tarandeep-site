@@ -31,12 +31,12 @@ export default function Page() {
     <main className="min-h-dvh flex flex-col gap-14 relative">
       {/* Hero */}
       <section id="hero">
-        <div className="mx-auto w-full max-w-2xl space-y-8">
+        <div className="relative size-20 md:size-32 flex-shrink-0">
           <div className="gap-2 gap-y-6 flex flex-col md:flex-row justify-between">
             <div className="gap-2 flex flex-col order-2 md:order-1">
               <BlurFadeText
                 delay={BLUR_FADE_DELAY}
-                className="text-3xl font-semibold tracking-tighter sm:text-4xl lg:text-5xl"
+                className="text-2xl font-semibold tracking-tighter sm:text-3xl lg:text-5xl"
                 yOffset={8}
                 text={`Hi, I'm ${DATA.name.split(" ")[0]}`}
               />

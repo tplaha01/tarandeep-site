@@ -122,7 +122,7 @@ export default function CIOLogPage() {
 
                     {/* Returns row */}
                     <div
-                      className={`flex items-center gap-4 px-3 py-2 rounded-lg text-xs w-fit ${
+                      className={`flex flex-wrap items-center gap-2 px-3 py-2 rounded-lg text-xs w-fit ${
                         isOutperform
                           ? "bg-emerald-50 dark:bg-emerald-950/30"
                           : isUnderperform
