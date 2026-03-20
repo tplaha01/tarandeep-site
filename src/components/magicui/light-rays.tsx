@@ -88,8 +88,8 @@ export function LightRays({
   className,
   style,
   count = 7,
-  color = "rgba(99, 102, 241, 0.5)",
-  blur = 36,
+  color = "rgba(139, 92, 246, 0.15)",
+  blur = 100,
   speed = 14,
   length = "70vh",
   ref,
@@ -122,23 +122,18 @@ export function LightRays({
       <div className="absolute inset-0 overflow-hidden">
         <div
           aria-hidden
-          className="absolute inset-0 opacity-60"
-          style={
-            {
-              background:
-                "radial-gradient(circle at 20% 15%, color-mix(in srgb, var(--light-rays-color) 45%, transparent), transparent 70%)",
-            } as CSSProperties
-          }
+          className="absolute inset-0 opacity-40"
+          style={{ background: "radial-gradient(circle at 15% 20%, rgba(139, 92, 246, 0.25), transparent 60%)" }}
         />
         <div
           aria-hidden
-          className="absolute inset-0 opacity-60"
-          style={
-            {
-              background:
-                "radial-gradient(circle at 80% 10%, color-mix(in srgb, var(--light-rays-color) 35%, transparent), transparent 75%)",
-            } as CSSProperties
-          }
+          className="absolute inset-0 opacity-40"
+          style={{ background: "radial-gradient(circle at 85% 10%, rgba(236, 72, 153, 0.15), transparent 60%)" }}
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0 opacity-30"
+          style={{ background: "radial-gradient(circle at 50% 5%, rgba(99, 102, 241, 0.2), transparent 70%)" }}
         />
         {rays.map((ray) => (
           <Ray key={ray.id} {...ray} />
