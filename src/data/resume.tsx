@@ -102,7 +102,7 @@ export const DATA = {
       school: "St. Vincent Pallotti College of Engineering",
       href: "#",
       degree: "BTech Computer Science & Engineering (Data Science)",
-      logoUrl: "/svpcoe.png",
+      logoUrl: "/svpcet.png",
       start: "Dec 2021",
       end: "Jun 2025",
     },
@@ -124,7 +124,7 @@ export const DATA = {
           icon: <Icons.github className="size-3" />,
         },
       ],
-      image: "",
+      image: "/alfred.png",
       video: "",
     },
     {
@@ -142,7 +142,7 @@ export const DATA = {
           icon: <Icons.globe className="size-3" />,
         },
       ],
-      image: "",
+      image: "/pitchflows.png",
       video: "",
     },
     {
