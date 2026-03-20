@@ -31,43 +31,43 @@ export default function Page() {
     <main className="min-h-dvh flex flex-col gap-14 relative">
       {/* Hero */}
       <section id="hero">
-        <div className="relative size-20 md:size-32 flex-shrink-0">
-          <div className="gap-2 gap-y-6 flex flex-col md:flex-row justify-between">
-            <div className="gap-2 flex flex-col order-2 md:order-1">
-              <BlurFadeText
-                delay={BLUR_FADE_DELAY}
-                className="text-2xl font-semibold tracking-tighter sm:text-3xl lg:text-5xl"
-                yOffset={8}
-                text={`Hi, I'm ${DATA.name.split(" ")[0]}`}
+        <div className="gap-6 flex flex-col md:flex-row justify-between items-start">
+          <div className="gap-2 flex flex-col order-2 md:order-1">
+            <BlurFadeText
+              delay={BLUR_FADE_DELAY}
+              className="text-2xl font-semibold tracking-tighter sm:text-3xl lg:text-5xl"
+              yOffset={8}
+              text={`Hi, I'm ${DATA.name.split(" ")[0]}`}
+            />
+            <BlurFadeText
+              className="text-muted-foreground max-w-[600px] md:text-lg lg:text-xl"
+              delay={BLUR_FADE_DELAY}
+              text={DATA.description}
+            />
+          </div>
+          <BlurFade delay={BLUR_FADE_DELAY} className="order-1 md:order-2 flex-shrink-0">
+            <div className="relative size-24 md:size-32">
+              {/* Blurred slow glow ring */}
+              <div
+                className="absolute inset-0 rounded-full animate-spin"
+                style={{
+                  background: "conic-gradient(from 0deg, #6366f1, #a855f7, #ec4899, #6366f1)",
+                  animationDuration: "6s",
+                  padding: "3px",
+                  filter: "blur(4px)",
+                  transform: "scale(1.08)",
+                }}
               />
-              <BlurFadeText
-                className="text-muted-foreground max-w-[600px] md:text-lg lg:text-xl"
-                delay={BLUR_FADE_DELAY}
-                text={DATA.description}
-              />
-            </div>
-            <BlurFade delay={BLUR_FADE_DELAY} className="order-1 md:order-2">
-              <div className="relative size-24 md:size-32 flex-shrink-0">
-                {/* Rotating gradient ring */}
-                <div
-                  className="absolute inset-0 rounded-full animate-spin"
-                  style={{
-                    background: "conic-gradient(from 0deg, #6366f1, #a855f7, #ec4899, #6366f1)",
-                    animationDuration: "3s",
-                    padding: "2px",
-                  }}
-                >
-                  <div className="size-full rounded-full bg-background" />
-                </div>
-                {/* Your photo on top */}
+              {/* Photo */}
+              <div className="absolute inset-[3px] rounded-full overflow-hidden">
                 <img
                   src="/me.png"
                   alt="Tarandeep Singh Plaha"
-                  className="absolute inset-[2px] size-[calc(100%-4px)] rounded-full object-cover object-top"
+                  className="size-full object-cover object-top"
                 />
               </div>
-            </BlurFade>
-          </div>
+            </div>
+          </BlurFade>
         </div>
       </section>
 
