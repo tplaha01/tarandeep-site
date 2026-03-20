@@ -1,0 +1,32 @@
+---
+title: "Week of March 16, 2026 — ALFRED signals flat, thesis forming on tech regime"
+date: "2026-03-16"
+portfolioReturn: "+0.3%"
+spyReturn: "+0.8%"
+status: "paper"
+tags: ["regime", "momentum", "signals"]
+---
+
+## Portfolio performance
+
+ALFRED paper portfolio: **+0.3%** vs SPY **+0.8%**. Underperformed this week. Market was risk-on and my regime filters were too conservative —  <Highlighter action="underline">I stayed out of a move I should have participated in.</Highlighter>
+
+## Signals that fired
+
+SMA stack alignment triggered on NVDA mid-Tuesday after a 3-day consolidation. Chaikin Money Flow confirmed (CMF > 0.1). Entered at 118.40, exited Thursday at 119.80 — left 2 points on the table by using a trailing stop that was too tight for the volatility. ATR-based stop should have been wider given the weekly range.
+
+## What worked
+
+The volume confirmation layer correctly filtered out a false momentum signal on MSFT Monday morning. Without it I would have entered a position that reversed within 4 hours. The filter is earning its keep.
+
+## What I got wrong
+
+Underestimated how strong the risk-on move would be after the CPI print came in soft. My regime classifier was still in "neutral" mode because I haven't given it enough weight on macro data. Pure technical signals aren't enough — need to bake in a macro override.
+
+## Market observation
+
+Tech sector showing strong breadth for the first time in 6 weeks. Semis leading (NVDA, AMD, AVGO). This looks like a genuine regime shift, not a bear market bounce. Watching for SMA50/200 cross confirmation on $SMH as the signal to lean harder on momentum signals.
+
+## What I'm changing
+
+Widening ATR multiplier for trailing stops from 1.5x to 2.0x on high-vol tickers. Will also add a simple macro flag (10Y yield direction, VIX level) as a regime override layer. Testing next week.

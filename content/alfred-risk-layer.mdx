@@ -1,0 +1,76 @@
+---
+title: "How I built ALFRED's production risk layer"
+publishedAt: "2026-03-15"
+summary: "A walkthrough of the risk management system inside ALFRED — Half-Kelly sizing, 95% VaR guards, ATR-scaled stops, and a drawdown circuit breaker."
+image: ""
+author: "Tarandeep Singh Plaha"
+content: ""
+---
+
+Building an algorithmic trading system is <Highlighter action="highlight" color="#87CEFA">20% signals and 80% not blowing up</Highlighter>. ALFRED's risk layer was the piece I spent the most time on, and it's what separates a backtesting toy from something I'd trust with real money.
+
+## Why risk management is the hard part
+
+Signal engineering is intellectually interesting — feature selection, regime detection, ensemble weighting. But signals only matter if your position sizing and stop logic let them compound over time. A system with mediocre signals and excellent risk management will outperform a system with excellent signals and no risk management. Every experienced quant will tell you this. I had to learn it the slightly expensive way in paper trading.
+
+## The four components
+
+### Half-Kelly position sizing
+
+Kelly criterion gives you the theoretically optimal fraction of capital to risk given an edge and win rate. Full Kelly is too aggressive for real trading — one bad streak and you're down 60%. Half-Kelly cuts the position size in half, which reduces variance significantly while keeping most of the long-run growth rate.
+
+```python
+def half_kelly_size(win_rate: float, avg_win: float, avg_loss: float, capital: float) -> float:
+    if avg_loss == 0:
+        return 0
+    b = avg_win / avg_loss  # win/loss ratio
+    kelly = (b * win_rate - (1 - win_rate)) / b
+    half_kelly = kelly / 2
+    return max(0, half_kelly * capital)
+```
+
+In practice, I recalculate this weekly using the last 20 trades, capped at 10% of capital per position regardless of what Kelly says.
+
+### Historical 95% VaR guard
+
+Value at Risk estimates the maximum expected loss over a period at a given confidence level. I use 60-day historical VaR at 95% confidence as a position entry filter — if a ticker's expected daily loss exceeds a threshold, I skip the trade.
+
+This catches high-volatility situations where even a correct signal direction could produce an outsized loss. It filtered a few trades this week that would have been losers.
+
+### ATR-scaled stops and take-profits
+
+Average True Range (ATR) measures volatility. Fixing your stop loss at a flat percentage ignores the fact that a 2% move means something very different on NVDA vs SPY. ATR-scaled stops breathe with the market.
+
+```python
+def atr_stop(entry_price: float, atr: float, multiplier: float = 1.5) -> float:
+    return entry_price - (atr * multiplier)
+
+def atr_take_profit(entry_price: float, atr: float, multiplier: float = 3.0) -> float:
+    return entry_price + (atr * multiplier)
+```
+
+I target a 2:1 reward/risk ratio minimum, which means the take-profit multiplier is always 2x the stop multiplier.
+
+### Drawdown circuit breaker
+
+This is the most important piece. If ALFRED's portfolio drops more than 8% from its recent peak, all trading halts automatically. No new entries, existing positions are closed at next open.
+
+```python
+def check_circuit_breaker(current_value: float, peak_value: float, threshold: float = 0.08) -> bool:
+    drawdown = (peak_value - current_value) / peak_value
+    return drawdown >= threshold
+```
+
+Drawdown periods are when systems break. Forcing a pause prevents a bad stretch from turning into a catastrophic loss. When the circuit trips, I review what happened before resuming.
+
+## What I'd do differently
+
+The VaR lookback window is still being calibrated. 60 days is smooth but slow to react to regime changes. I'm testing 20-day VaR to see if the faster responsiveness is worth the additional noise.
+
+The circuit breaker threshold was set somewhat arbitrarily at 8%. I need more backtesting data before I'd have strong conviction on that number.
+
+## What comes next
+
+The next piece is dynamic position sizing that adjusts based on signal confidence, not just Kelly. When all four signals agree, size up within Kelly bounds. When only two signals agree, size down. This should improve the Sharpe ratio without changing the number of trades.
+
+Will log how it performs in the CIO Log.

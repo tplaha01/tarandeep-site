@@ -1,0 +1,32 @@
+---
+title: "Week of March 9, 2026 — First full week of paper trading, calibrating stops"
+date: "2026-03-09"
+portfolioReturn: "+1.4%"
+spyReturn: "+0.2%"
+status: "paper"
+tags: ["stops", "position-sizing", "calibration"]
+---
+
+## Portfolio performance
+
+ALFRED paper portfolio: **+1.4%** vs SPY **+0.2%**. Outperformed on a low-volume week. Not reading too much into it — one week of outperformance is noise. The more important thing is that the system executed trades cleanly with no errors.
+
+## Signals that fired
+
+Three entries this week across AAPL, NVDA, and AMD. All three triggered on SMA stack alignment + CMF confirmation. NVDA was the standout — entered Monday, exited Wednesday, +1.1% on the position. AAPL was flat. AMD small loss (-0.3%).
+
+## What worked
+
+Half-Kelly position sizing behaved exactly as intended. When two signals fired simultaneously (NVDA + AMD), it reduced position size appropriately rather than over-concentrating. The drawdown circuit breaker wasn't triggered, which is what you want in a normal week.
+
+## What I got wrong
+
+The 95% VaR guard was too conservative on AAPL — it flagged the position as high-risk before entry because AAPL had elevated recent volatility, but the actual trade was fine. Need to review whether the lookback window for VaR is calibrated correctly (currently using 60-day, might try 20-day).
+
+## Market observation
+
+Low-volume week with no major macro events. Market was in drift mode. These weeks tend to produce false signals from momentum-only systems. The CMF confirmation layer helped avoid two potential false entries.
+
+## What I'm changing
+
+Experimenting with 20-day vs 60-day lookback for VaR calculation. Will run backtests on both configurations this weekend and log the results. Hypothesis: 20-day is more responsive but noisier; 60-day is smoother but lags.
